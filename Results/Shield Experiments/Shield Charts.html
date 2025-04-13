@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auction Data Analysis</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+<style>
+body {
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 20px;
+background-color: #f0f0f0;
+}
+.chart-container {
+width: 80%;
+margin: 20px auto;
+background-color: white;
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+h1, h2 {
+text-align: center;
+color: #333;
+}
+</style>
+</head>
+<body>
+<h1>Auction Data Analysis</h1>
+
+<div class="chart-container">
+<h2>Reserve Price vs Final Price (Not Active vs Active Shield)</h2>
+<canvas id="reservePriceChart"></canvas>
+</div>
+
+<div class="chart-container">
+<h2>Auction Duration vs Total Bids</h2>
+<canvas id="durationChart"></canvas>
+</div>
+
+<div class="chart-container">
+<h2>Shield Bidder Cost vs Profit</h2>
+<canvas id="shieldBidderChart"></canvas>
+</div>
+
+<script>
+const data = [
+{reservePrice: 100000, duration: 3, finalPriceNotActive: 158675.4, finalPriceActive: 55294.2, totalBidsNotActive: 112, totalBidsActive: 40, cost: 437297.5, profit: 44705.8},
+{reservePrice: 200000, duration: 6, finalPriceNotActive: 518168.4, finalPriceActive: 109748.6, totalBidsNotActive: 255, totalBidsActive: 56, cost: 338196, profit: 90251.4},
+{reservePrice: 300000, duration: 8, finalPriceNotActive: 679587.9, finalPriceActive: 168503.7, totalBidsNotActive: 266, totalBidsActive: 70, cost: 511174.75, profit: 131496.3},
+{reservePrice: 400000, duration: 10, finalPriceNotActive: 778407.8, finalPriceActive: 223283, totalBidsNotActive: 250, totalBidsActive: 75, cost: 680177.75, profit: 176717},
+{reservePrice: 500000, duration: 12, finalPriceNotActive: 878919.4, finalPriceActive: 277929.2, totalBidsNotActive: 240, totalBidsActive: 79, cost: 849047.65, profit: 222070.8},
+{reservePrice: 600000, duration: 14, finalPriceNotActive: 979864.8, finalPriceActive: 330149.6, totalBidsNotActive: 236, totalBidsActive: 81, cost: 1015491.75, profit: 269850.4},
+{reservePrice: 700000, duration: 16, finalPriceNotActive: 1073444.9, finalPriceActive: 386095.7, totalBidsNotActive: 222, totalBidsActive: 82, cost: 1185661.55, profit: 313904.3},
+{reservePrice: 800000, duration: 18, finalPriceNotActive: 1177748.7, finalPriceActive: 442695.4, totalBidsNotActive: 218, totalBidsActive: 83, cost: 1356484.9, profit: 357304.6},
+{reservePrice: 900000, duration: 20, finalPriceNotActive: 1271994.6, finalPriceActive: 494186.5, totalBidsNotActive: 206, totalBidsActive: 81, cost: 1522199.7, profit: 405813.5},
+{reservePrice: 1000000, duration: 24, finalPriceNotActive: 1372907.2, finalPriceActive: 551843.8, totalBidsNotActive: 203, totalBidsActive: 83, cost: 1694080.7, profit: 448156.2}
+];
+
+// Chart 1: Reserve Price vs Final Price
+new Chart(document.getElementById('reservePriceChart'), {
+type: 'line',
+data: {
+labels: data.map(d => d.reservePrice),
+datasets: [{
+label: 'Final Price (Not Active Shield)',
+data: data.map(d => d.finalPriceNotActive),
+borderColor: 'rgb(255, 99, 132)',
+fill: false
+}, {
+label: 'Final Price (Active Shield)',
+data: data.map(d => d.finalPriceActive),
+borderColor: 'rgb(54, 162, 235)',
+fill: false
+}]
+},
+options: {
+responsive: true,
+scales: {
+x: {
+title: {
+display: true,
+text: 'Reserve Price'
+}
+},
+y: {
+title: {
+display: true,
+text: 'Final Price'
+}
+}
+}
+}
+});
+
+// Chart 2: Auction Duration vs Total Bids
+new Chart(document.getElementById('durationChart'), {
+type: 'bar',
+data: {
+labels: data.map(d => d.duration),
+datasets: [{
+label: 'Total Bids (Not Active Shield)',
+data: data.map(d => d.totalBidsNotActive),
+backgroundColor: 'rgba(255, 99, 132, 0.5)'
+}, {
+label: 'Total Bids (Active Shield)',
+data: data.map(d => d.totalBidsActive),
+backgroundColor: 'rgba(54, 162, 235, 0.5)'
+}]
+},
+options: {
+responsive: true,
+scales: {
+x: {
+title: {
+display: true,
+text: 'Auction Duration (Hours)'
+}
+},
+y: {
+title: {
+display: true,
+text: 'Total Bids'
+}
+}
+}
+}
+});
+
+// Chart 3: Shield Bidder Cost vs Profit
+new Chart(document.getElementById('shieldBidderChart'), {
+type: 'bar',
+data: {
+labels: data.map(d => d.reservePrice),
+datasets: [{
+label: 'Cost for Shield Bidder',
+data: data.map(d => d.cost),
+backgroundColor: 'rgba(255, 99, 132, 0.5)'
+}, {
+label: 'Profit for Shield Bidder',
+data: data.map(d => d.profit),
+backgroundColor: 'rgba(75, 192, 192, 0.5)'
+}]
+},
+options: {
+responsive: true,
+scales: {
+x: {
+title: {
+display: true,
+text: 'Reserve Price'
+}
+},
+y: {
+title: {
+display: true,
+text: 'Amount'
+}
+}
+}
+}
+});
+</script>
+</body>
+</html>
