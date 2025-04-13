@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collected Fees Comparison</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+<style>
+body {
+font-family: Arial, sans-serif;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+margin: 0;
+background-color: #f0f0f0;
+}
+#chart-container {
+width: 80%;
+max-width: 800px;
+background-color: white;
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+</style>
+</head>
+<body>
+<div id="chart-container">
+<canvas id="collectedFeesChart"></canvas>
+</div>
+
+<script>
+const data = [
+{duration: 2, percentage: 1, fee: 860.206},
+{duration: 2, percentage: 5, fee: 1010.77},
+{duration: 2, percentage: 10, fee: 7730.50},
+{duration: 2, percentage: 25, fee: 3068.79},
+{duration: 2, percentage: 45, fee: 476.781},
+{duration: 6, percentage: 1, fee: 2247.583},
+{duration: 6, percentage: 5, fee: 9738.924},
+{duration: 6, percentage: 10, fee: 7397.039},
+{duration: 6, percentage: 25, fee: 163547.60},
+{duration: 6, percentage: 45, fee: 104927.01},
+{duration: 12, percentage: 1, fee: 22060.278},
+{duration: 12, percentage: 5, fee: 51794.648},
+{duration: 12, percentage: 10, fee: 52220.084},
+{duration: 12, percentage: 25, fee: 464060.281},
+{duration: 12, percentage: 45, fee: 410304.298},
+{duration: 24, percentage: 1, fee: 187723.261},
+{duration: 24, percentage: 5, fee: 544096.318},
+{duration: 24, percentage: 10, fee: 539821.414},
+{duration: 24, percentage: 25, fee: 564110.094},
+{duration: 24, percentage: 45, fee: 1394349.676}
+];
+
+const ctx = document.getElementById('collectedFeesChart').getContext('2d');
+
+const chart = new Chart(ctx, {
+type: 'line',
+data: {
+datasets: [2, 6, 12, 24].map(duration => ({
+label: `${duration} hours`,
+data: data.filter(d => d.duration === duration).map(d => ({x: d.percentage, y: d.fee})),
+borderColor: `hsl(${duration * 15}, 70%, 50%)`,
+tension: 0.4
+}))
+},
+options: {
+responsive: true,
+scales: {
+x: {
+type: 'linear',
+position: 'bottom',
+title: {
+display: true,
+text: 'Shill Percentage of Total Bidders'
+},
+ticks: {
+callback: function(value) {
+return value + '%';
+}
+}
+},
+y: {
+type: 'logarithmic',
+title: {
+display: true,
+text: 'Collected Fee (log scale)'
+}
+}
+},
+plugins: {
+title: {
+display: true,
+text: 'Collected Fees Comparison and Trend in Prevention Mode',
+font: {
+size: 16
+}
+},
+legend: {
+position: 'bottom'
+}
+}
+}
+});
+</script>
+</body>
+</html>

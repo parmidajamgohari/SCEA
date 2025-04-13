@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Total Active Bidders Comparison</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+<style>
+body {
+font-family: Arial, sans-serif;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+margin: 0;
+background-color: #f0f0f0;
+}
+#chart-container {
+width: 80%;
+max-width: 800px;
+background-color: white;
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+</style>
+</head>
+<body>
+<div id="chart-container">
+<canvas id="myChart"></canvas>
+</div>
+
+<script>
+const ctx = document.getElementById('myChart').getContext('2d');
+
+const data = {
+labels: [
+'1% - 2h', '5% - 2h', '10% - 2h', '25% - 2h', '45% - 2h',
+'1% - 6h', '5% - 6h', '10% - 6h', '25% - 6h', '45% - 6h',
+'1% - 12h', '5% - 12h', '10% - 12h', '25% - 12h', '45% - 12h',
+'1% - 24h', '5% - 24h', '10% - 24h', '25% - 24h', '45% - 24h'
+],
+datasets: [
+{
+label: 'No Shill Bidders, No Prevention',
+data: [32, 26, 27, 27, 15, 92, 88, 83, 71, 52, 92, 88, 83, 71, 54, 92, 88, 83, 71, 54],
+borderColor: 'rgb(75, 192, 192)',
+tension: 0.1
+},
+{
+label: 'Shill Bidders Active, No Prevention',
+data: [43, 50, 59, 64, 66, 89, 92, 95, 99, 99, 94, 96, 95, 99, 100, 90, 96, 95, 98, 100],
+borderColor: 'rgb(255, 99, 132)',
+tension: 0.1
+},
+{
+label: 'Shill Bidders Active, Prevention Active',
+data: [26, 36, 37, 62, 59, 82, 89, 85, 92, 92, 94, 95, 96, 93, 97, 90, 96, 95, 98, 100],
+borderColor: 'rgb(54, 162, 235)',
+tension: 0.1
+}
+]
+};
+
+new Chart(ctx, {
+type: 'line',
+data: data,
+options: {
+responsive: true,
+plugins: {
+title: {
+display: true,
+text: 'Total Active Bidders Comparison'
+},
+tooltip: {
+mode: 'index',
+intersect: false
+}
+},
+scales: {
+x: {
+title: {
+display: true,
+text: 'Shill Percentage - Auction Duration'
+}
+},
+y: {
+title: {
+display: true,
+text: 'Total Active Bidders'
+},
+suggestedMin: 0,
+suggestedMax: 100
+}
+}
+}
+});
+</script>
+</body>
+</html>

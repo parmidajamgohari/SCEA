@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shill Bidder Detection Effectiveness</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+<style>
+body {
+font-family: Arial, sans-serif;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+margin: 0;
+background-color: #f0f0f0;
+}
+#chart-container {
+width: 90%;
+max-width: 800px;
+background-color: white;
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+</style>
+</head>
+<body>
+<div id="chart-container">
+<canvas id="shillBidderDetectionChart"></canvas>
+</div>
+
+<script>
+const data = [
+{duration: 2, percentage: 1, detected: 1, total: 1},
+{duration: 2, percentage: 5, detected: 5, total: 5},
+{duration: 2, percentage: 10, detected: 8, total: 10},
+{duration: 2, percentage: 25, detected: 3, total: 25},
+{duration: 2, percentage: 45, detected: 1, total: 45},
+{duration: 6, percentage: 1, detected: 1, total: 1},
+{duration: 6, percentage: 5, detected: 5, total: 5},
+{duration: 6, percentage: 10, detected: 10, total: 10},
+{duration: 6, percentage: 25, detected: 25, total: 25},
+{duration: 6, percentage: 45, detected: 34, total: 45},
+{duration: 12, percentage: 1, detected: 1, total: 1},
+{duration: 12, percentage: 5, detected: 5, total: 5},
+{duration: 12, percentage: 10, detected: 10, total: 10},
+{duration: 12, percentage: 25, detected: 25, total: 25},
+{duration: 12, percentage: 45, detected: 45, total: 45},
+{duration: 24, percentage: 1, detected: 1, total: 1},
+{duration: 24, percentage: 5, detected: 5, total: 5},
+{duration: 24, percentage: 10, detected: 10, total: 10},
+{duration: 24, percentage: 25, detected: 25, total: 25},
+{duration: 24, percentage: 45, detected: 45, total: 45}
+];
+
+const ctx = document.getElementById('shillBidderDetectionChart').getContext('2d');
+
+const chart = new Chart(ctx, {
+type: 'bar',
+data: {
+labels: data.map(d => `${d.duration}h, ${d.percentage}%`),
+datasets: [
+{
+label: 'Detected Shill Bidders',
+data: data.map(d => d.detected),
+backgroundColor: 'rgba(75, 192, 192, 0.7)',
+borderColor: 'rgba(75, 192, 192, 1)',
+borderWidth: 1
+},
+{
+label: 'Undetected Shill Bidders',
+data: data.map(d => d.total - d.detected),
+backgroundColor: 'rgba(255, 99, 132, 0.7)',
+borderColor: 'rgba(255, 99, 132, 1)',
+borderWidth: 1
+}
+]
+},
+options: {
+responsive: true,
+scales: {
+x: {
+stacked: true,
+title: {
+display: true,
+text: 'Auction Duration (hours), Shill Percentage'
+}
+},
+y: {
+stacked: true,
+beginAtZero: true,
+title: {
+display: true,
+text: 'Number of Shill Bidders'
+}
+}
+},
+plugins: {
+title: {
+display: true,
+text: 'Shill Bidder Detection Effectiveness',
+font: {
+size: 16
+}
+},
+legend: {
+position: 'bottom'
+},
+tooltip: {
+callbacks: {
+afterBody: function(context) {
+const index = context[0].dataIndex;
+const run = data[index];
+const effectiveness = ((run.detected / run.total) * 100).toFixed(1);
+return `Detection Rate: ${effectiveness}%`;
+}
+}
+}
+}
+}
+});
+</script>
+</body>
+</html>

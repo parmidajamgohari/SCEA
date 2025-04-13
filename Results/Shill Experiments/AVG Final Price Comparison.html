@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Average Final Price Comparison Across Experiment Modes</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+<style>
+body {
+font-family: Arial, sans-serif;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+margin: 0;
+background-color: #f0f0f0;
+}
+#chartContainer {
+width: 80%;
+max-width: 800px;
+background-color: white;
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+</style>
+</head>
+<body>
+<div id="chartContainer">
+<canvas id="comparisonChart"></canvas>
+</div>
+
+<script>
+function calculateAverage(arr) {
+return arr.reduce((a, b) => a + b, 0) / arr.length;
+}
+
+const data = {
+noShillNoPrevention: [73082.5, 67539.6, 68136, 49871.9, 35636.7, 512377, 483605.9, 452824.1, 401128.6, 258695.8, 602441, 609720.6, 583688.5, 605251.6, 500493.8, 605954.9, 609720, 583688.5, 609825.5, 578352.1],
+shillNoPrevention: [110620.28, 101693.01, 119225.11, 89464.66, 87909.02, 553288.96, 557397.91, 512581, 518821.6, 436030.17, 613530.57, 609062.16, 593745.25, 609791.71, 529066.02, 613675.96, 611289.75, 595054.3, 611209.98, 591929.99],
+shillWithPrevention: [63447.07, 91263.96, 70359.74, 82598.94, 69435.71, 445164.29, 428896.06, 369590.68, 319302.21, 214061.69, 604135.63, 582255.32, 577635.07, 544446.2, 432694.85, 602418.77, 608507.36, 585253.05, 608872.23, 516333.88]
+};
+
+const averages = {
+noShillNoPrevention: calculateAverage(data.noShillNoPrevention),
+shillNoPrevention: calculateAverage(data.shillNoPrevention),
+shillWithPrevention: calculateAverage(data.shillWithPrevention)
+};
+
+const chartData = {
+labels: ['No Shill Bidders,\nNo Prevention', 'Shill Bidders Active,\nNo Prevention', 'Shill Bidders Active,\nPrevention Active'],
+datasets: [{
+label: 'Average Final Price',
+data: [averages.noShillNoPrevention, averages.shillNoPrevention, averages.shillWithPrevention],
+backgroundColor: ['#1f77b4', '#ff7f0e', '#2ca02c'],
+borderColor: ['#1f77b4', '#ff7f0e', '#2ca02c'],
+borderWidth: 1
+}]
+};
+
+const config = {
+type: 'bar',
+data: chartData,
+options: {
+responsive: true,
+plugins: {
+title: {
+display: true,
+text: 'Average Final Price Comparison Across Experiment Modes',
+font: { size: 18 }
+},
+tooltip: {
+callbacks: {
+label: function(context) {
+let label = context.dataset.label || '';
+if (label) {
+label += ': ';
+}
+if (context.parsed.y !== null) {
+label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+}
+return label;
+}
+}
+},
+legend: {
+display: false
+}
+},
+scales: {
+y: {
+beginAtZero: true,
+title: {
+display: true,
+text: 'Average Final Price (USD)',
+font: { size: 14 }
+},
+ticks: {
+callback: function(value, index, values) {
+return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumSignificantDigits: 3 }).format(value);
+}
+}
+}
+}
+}
+};
+
+const ctx = document.getElementById('comparisonChart').getContext('2d');
+new Chart(ctx, config);
+</script>
+</body>
+</html>

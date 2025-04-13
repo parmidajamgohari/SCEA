@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Total Bids Comparison</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+<style>
+body {
+font-family: Arial, sans-serif;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+margin: 0;
+background-color: #f0f0f0;
+}
+#chart-container {
+width: 80%;
+max-width: 800px;
+background-color: white;
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+</style>
+</head>
+<body>
+<div id="chart-container">
+<canvas id="myChart"></canvas>
+</div>
+
+<script>
+const ctx = document.getElementById('myChart').getContext('2d');
+
+const data = {
+labels: [
+'1% - 2h', '5% - 2h', '10% - 2h', '25% - 2h', '45% - 2h',
+'1% - 6h', '5% - 6h', '10% - 6h', '25% - 6h', '45% - 6h',
+'1% - 12h', '5% - 12h', '10% - 12h', '25% - 12h', '45% - 12h',
+'1% - 24h', '5% - 24h', '10% - 24h', '25% - 24h', '45% - 24h'
+],
+datasets: [
+{
+label: 'No Shill Bidders, No Prevention',
+data: [37, 33, 32, 27, 20, 246, 234, 230, 206, 141, 284, 277, 278, 287, 267, 286, 277, 278, 291, 299],
+borderColor: 'rgb(75, 192, 192)',
+tension: 0.1
+},
+{
+label: 'Shill Bidders Active, No Prevention',
+data: [73, 117, 121, 126, 125, 317, 392, 416, 428, 446, 374, 623, 649, 691, 712, 378, 912, 1112, 1198, 1255],
+borderColor: 'rgb(255, 99, 132)',
+tension: 0.1
+},
+{
+label: 'Shill Bidders Active, Prevention Active',
+data: [35, 64, 86, 123, 120, 233, 255, 246, 325, 345, 327, 337, 358, 451, 476, 349, 464, 459, 475, 686],
+borderColor: 'rgb(54, 162, 235)',
+tension: 0.1
+}
+]
+};
+
+new Chart(ctx, {
+type: 'line',
+data: data,
+options: {
+responsive: true,
+plugins: {
+title: {
+display: true,
+text: 'Total Bids Comparison'
+},
+tooltip: {
+mode: 'index',
+intersect: false
+}
+},
+scales: {
+x: {
+title: {
+display: true,
+text: 'Shill Percentage - Auction Duration'
+}
+},
+y: {
+title: {
+display: true,
+text: 'Total Bids'
+},
+suggestedMin: 0
+}
+}
+}
+});
+</script>
+</body>
+</html>
