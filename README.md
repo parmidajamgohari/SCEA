@@ -26,30 +26,3 @@ This simulation model is developed for research purposes and allows for experime
 
 *   **Dr. Alireza Hashemi Golpayegani** - Research Supervisor.
 *   **Dr. Sara Salimi Namin** - Research Supervisor.
-
-## How to Run the Model
-
-To run the SCEA v1.0 simulation model, you will need to have **AnyLogic simulation software** installed on your machine.
-
-1.  **Download and Install AnyLogic:** If you do not have AnyLogic, you can download a free learning edition or a professional version from the [AnyLogic website](https://www.anylogic.com/).
-2.  **Open the Project:** Launch AnyLogic and open the `SCEA v1.0.alp` file.
-3.  **Explore and Run Experiments:**
-    *   Navigate through the project structure in the AnyLogic Project window.
-    *   Explore the 'Main' experiment and other defined experiments (like those in "shield" or "Shill Experiment" if they are set up as separate experiments in AnyLogic).
-    *   Adjust parameters in the 'Main' experiment or specific experiment configurations as needed.
-    *   Run the simulation by clicking the 'Run' button and selecting the desired experiment to execute.
-4.  **Analyze Results:** Observe the simulation outputs, logs, and any visual dashboards created within the AnyLogic model to analyze the results of your experiments.
-
-## Model Parameters (Partial List)
-
-The model is parameterized to allow for flexible experimentation. Some key parameters you can adjust within the 'Main' agent of the AnyLogic model include:
-
-*   **`p_TotalBidders`**:  (Integer) -  Specifies the total number of bidders participating in the auction.
-*   **`p_ShillPercentage`**: (Double) -  Determines the percentage of bidders who are shill bidders.
-*   **`p_ShieldBidder`**: (Boolean) -  Indicates whether a shield bidder is present in the auction.
-*   **`p_IsShieldAcitve`**: (Boolean) -  Activates or deactivates the shield mechanism in the simulation.
-*   **`p_AuctionDuration`**: (Integer, Time Unit: HOUR) - Sets the duration of the auction.
-*   **`p_HasPrevention`**: (Boolean) -  Potentially related to implementing preventative measures against shill bidding (needs further investigation within the model).
-*   **`p_ForceStopShills`**: (Boolean) -  May control the behavior of shill bidders, possibly forcing them to stop bidding under certain conditions.
-
-**Note:** This is a partial list of parameters extracted from the provided `SCEA v1.0.alp` file. A full understanding of all parameters and model functionalities requires opening the `SCEA v1.0.alp` project in AnyLogic and examining the model logic.
